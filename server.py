@@ -34,6 +34,10 @@ def emotion_detect():
     # Extract the dominant emotion and remove it from the dictionary
     dominant_emotion = response.pop("dominant_emotion")
 
+    # If the dominant emotion is None, then return a message
+    if not dominant_emotion:
+        return "Invalid text! Please try again!"
+
     # convert the json object to a string, remove the brackets and replace the double
     # quotes with single quotes, and insert the word and before 'sadness'
     response_str = json.dumps(response)

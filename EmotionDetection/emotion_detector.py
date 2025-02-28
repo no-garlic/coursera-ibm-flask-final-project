@@ -15,6 +15,17 @@ def emotion_detector(text_to_analyse):
     # Make a POST request to the API with the payload and headers
     response = requests.post(url, json=myobj, headers=header)
 
+    # If we get a 400 error, then return a dictionary with all values of None
+    if response.status_code == 400:
+        return {
+            'anger': None, 
+            'disgust': None, 
+            'fear': None, 
+            'joy': None, 
+            'sadness': None, 
+            'dominant_emotion': None
+            }
+
     # Parse the response from the API
     formatted_response = json.loads(response.text)
 
@@ -30,48 +41,3 @@ def emotion_detector(text_to_analyse):
     # Return the emotions dictionary
     return emotions
     
-
-
-
-
-"""
-from emotion_detection import emotion_detector
-response = emotion_detector("I am so happy I am doing this")
-print(response)
-
-{
-   "emotionPredictions":[
-      {
-         "emotion":{
-            "anger":0.01364663,
-            "disgust":0.0017160787,
-            "fear":0.008986978,
-            "joy":0.9719017,
-            "sadness":0.055187024
-         },
-         "target":"",
-         "emotionMentions":[
-            {
-               "span":{
-                  "begin":0,
-                  "end":27,
-                  "text":"I love this new technology."
-               },
-               "emotion":{
-                  "anger":0.01364663,
-                  "disgust":0.0017160787,
-                  "fear":0.008986978,
-                  "joy":0.9719017,
-                  "sadness":0.055187024
-               }
-            }
-         ]
-      }
-   ],
-   "producerId":{
-      "name":"Ensemble Aggregated Emotion Workflow",
-      "version":"0.0.1"
-   }
-}
-
-"""
